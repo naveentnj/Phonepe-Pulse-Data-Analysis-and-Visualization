@@ -30,19 +30,19 @@ st. set_page_config(layout="wide")
 # Indian_States = pd.read_sql(query, con = conn)
 
 # DATASETS
-Data_Aggregated_Transaction_df= pd.read_csv(r'data/Data_Aggregated_Transaction_Table.csv')
-Data_Aggregated_User_Summary_df= pd.read_csv(r'data/Data_Aggregated_User_Summary_Table.csv')
-Data_Aggregated_User_df= pd.read_csv(r'data/Data_Aggregated_User_Table.csv')
+Data_Aggregated_Transaction_df= pd.read_csv('data/Aggregated-Transaction-Data.csv')
+Data_Aggregated_User_Summary_df= pd.read_csv(r'data/Aggregated-User-Data-Summary.csv')
+Data_Aggregated_User_df= pd.read_csv(r'data/Aggregated-User-Data-DataFrame.csv')
 Scatter_Geo_Dataset =  pd.read_csv(r'data/Data_Map_Districts_Longitude_Latitude.csv')
 Coropleth_Dataset =  pd.read_csv(r'data/Data_Map_IndiaStates_TU.csv')
-Data_Map_Transaction_df = pd.read_csv(r'data/Data_Map_Transaction_Table.csv')
-Data_Map_User_Table= pd.read_csv(r'data/Data_Map_User_Table.csv')
+Data_Map_Transaction_df = pd.read_csv(r'data/Map-Transaction-Data.csv')
+Data_Map_User_Table= pd.read_csv(r'data/Map-User-Data.csv')
 Indian_States= pd.read_csv(r'data/Longitude_Latitude_State_Table.csv')
 colT1,colT2 = st.columns([2,8])
 with colT2:
     st.title(':red[PhonePe Pulse Data Analysis:signal_strength:]')
 
-#@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ INDIA MAP ANALYSIS @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+#INDIA MAP ANALYSIS 
 
 c1,c2=st.columns(2)
 with c1:
@@ -58,26 +58,33 @@ quarter=int(Quarter)
 Transaction_scatter_districts=Data_Map_Transaction_df.loc[(Data_Map_Transaction_df['Year'] == year ) & (Data_Map_Transaction_df['Quarter']==quarter) ].copy()
 Transaction_Coropleth_States=Transaction_scatter_districts[Transaction_scatter_districts["State"] == "india"]
 Transaction_scatter_districts.drop(Transaction_scatter_districts.index[(Transaction_scatter_districts["State"] == "india")],axis=0,inplace=True)
+
 # Dynamic Scattergeo Data Generation
+
 Transaction_scatter_districts = Transaction_scatter_districts.sort_values(by=['Place_Name'], ascending=False)
 Scatter_Geo_Dataset = Scatter_Geo_Dataset.sort_values(by=['District'], ascending=False) 
 Total_Amount=[]
+
 for i in Transaction_scatter_districts['Total_Amount']:
     Total_Amount.append(i)
 Scatter_Geo_Dataset['Total_Amount']=Total_Amount
 Total_Transaction=[]
+
 for i in Transaction_scatter_districts['Total_Transactions_count']:
     Total_Transaction.append(i)
 Scatter_Geo_Dataset['Total_Transactions']=Total_Transaction
 Scatter_Geo_Dataset['Year_Quarter']=str(year)+'-Q'+str(quarter)
+
 # Dynamic Coropleth
 Coropleth_Dataset = Coropleth_Dataset.sort_values(by=['state'], ascending=False)
 Transaction_Coropleth_States = Transaction_Coropleth_States.sort_values(by=['Place_Name'], ascending=False)
 Total_Amount=[]
+
 for i in Transaction_Coropleth_States['Total_Amount']:
     Total_Amount.append(i)
 Coropleth_Dataset['Total_Amount']=Total_Amount
 Total_Transaction=[]
+
 for i in Transaction_Coropleth_States['Total_Transactions_count']:
     Total_Transaction.append(i)
 Coropleth_Dataset['Total_Transactions']=Total_Transaction
