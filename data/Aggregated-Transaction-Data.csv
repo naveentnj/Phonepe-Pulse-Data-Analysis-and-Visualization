@@ -1,4 +1,4 @@
-Payment Mode,Total Transactions count,Total Amount,Quarter,Year,State
+Payment_Mode,Total_Transactions_count,Total_Amount,Quarter,Year,State
 Recharge & bill payments,4200,1845307.4673655091,1,2018,andaman-&-nicobar-islands
 Peer-to-peer payments,1871,12138655.299749982,1,2018,andaman-&-nicobar-islands
 Merchant payments,298,452507.168646613,1,2018,andaman-&-nicobar-islands
