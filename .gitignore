@@ -3,5 +3,5 @@
 .ipynb_checkpoints
 __pycache__/
 map_india.py
-hello.py
-lat_long.csv
+creds.py
+
